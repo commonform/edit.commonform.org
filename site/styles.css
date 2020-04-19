@@ -13,13 +13,27 @@ main {
   padding: 0;
 }
 
-.CodeMirror {
+#editor {
   background: white;
   filter: drop-shadow(0 0 0.5rem #777);
   font-family: serif;
   font-size: 150%;
+}
+
+.CodeMirror {
   height: 90vh;
+  margin: 0;
+}
+
+#panel {
+  background: #f7f7f7;
   margin: 2vh 0 0 0;
+  padding: 3px;
+}
+
+#panel button,
+#panel select {
+  margin: 1ex;
 }
 
 a[href] {
