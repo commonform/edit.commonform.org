@@ -143,5 +143,10 @@ function addHelpLinks () {
   githubLink.appendChild(document.createTextNode('GitHub'))
   p.appendChild(githubLink)
 
+  var emailLink = document.createElement('a')
+  emailLink.href = 'mailto:kyle@commonform.org'
+  emailLink.appendChild(document.createTextNode('E-Mail Kyle'))
+  p.appendChild(emailLink)
+
   document.getElementById('main').appendChild(p)
 }
