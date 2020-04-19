@@ -1,7 +1,9 @@
+/* eslint-env browser */
 var FileSaver = require('file-saver')
 var commonmark = require('commonform-commonmark')
 var critique = require('commonform-critique')
 var docx = require('commonform-docx')
+var html = require('commonform-html')
 var lint = require('commonform-lint')
 
 var numberings = {
@@ -105,22 +107,10 @@ function addPanel () {
   var panel = document.createElement('div')
   panel.id = 'panel'
 
-  var styleSelect = document.createElement('select')
-  Object.keys(styles).forEach(function (key) {
-    var option = document.createElement('option')
-    option.value = key
-    option.appendChild(document.createTextNode(styles[key].label))
-    styleSelect.appendChild(option)
-  })
+  var styleSelect = makeSelect(styles)
   panel.appendChild(styleSelect)
 
-  var numberingSelect = document.createElement('select')
-  Object.keys(numberings).forEach(function (key) {
-    var option = document.createElement('option')
-    option.value = key
-    option.appendChild(document.createTextNode(numberings[key].label))
-    numberingSelect.appendChild(option)
-  })
+  var numberingSelect = makeSelect(numberings)
   panel.appendChild(numberingSelect)
 
   var wordButton = document.createElement('button')
@@ -144,7 +134,69 @@ function addPanel () {
   })
   panel.appendChild(wordButton)
 
+  var html5Label = makeCheckboxLabel('HTML5')
+  panel.appendChild(html5Label)
+
+  var html5Check = makeCheckbox()
+  panel.appendChild(html5Check)
+
+  var idsLabel = makeCheckboxLabel('IDs')
+  panel.appendChild(idsLabel)
+
+  var idsCheck = makeCheckbox()
+  panel.appendChild(idsCheck)
+
+  var listsLabel = makeCheckboxLabel('Lists')
+  panel.appendChild(listsLabel)
+
+  var listsCheck = makeCheckbox()
+  panel.appendChild(listsCheck)
+
+  var htmlButton = document.createElement('button')
+  htmlButton.appendChild(document.createTextNode('Download HTML'))
+  htmlButton.addEventListener('click', function () {
+    try {
+      var parsed = commonmark.parse(window.editor.getValue())
+    } catch (error) {
+      console.error(error)
+      return
+    }
+    var content = html(parsed.form, [], {
+      html5: html5Check.checked,
+      ids: idsCheck.checked,
+      lists: listsCheck.checked
+    })
+    var blob = new Blob([content], { type: 'text/html' })
+    var date = new Date().toISOString()
+    FileSaver.saveAs(blob, 'commonform-' + date + '.html', true)
+  })
+  panel.appendChild(htmlButton)
+
   window.editor.addPanel(panel, { position: 'after-top', stable: true })
+}
+
+function makeSelect (choices) {
+  var select = document.createElement('select')
+  Object.keys(choices).forEach(function (key) {
+    var option = document.createElement('option')
+    option.value = key
+    option.appendChild(document.createTextNode(choices[key].label))
+    select.appendChild(option)
+  })
+  return select
+}
+
+function makeCheckboxLabel (text) {
+  var label = document.createElement('label')
+  label.appendChild(document.createTextNode(text))
+  return label
+}
+
+function makeCheckbox () {
+  var checkbox = document.createElement('input')
+  checkbox.type = 'checkbox'
+  checkbox.checked = 'yes'
+  return checkbox
 }
 
 function addHelpLinks () {

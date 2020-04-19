@@ -29,8 +29,9 @@ main {
 
 #panel {
   background: #f7f7f7;
+  font-family: sans-serif;
+  font-size: 80%;
   margin: 2vh 0 0 0;
-  padding: 3px;
 }
 
 #panel button,
