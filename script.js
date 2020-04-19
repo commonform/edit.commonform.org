@@ -23,6 +23,26 @@ var numberings = {
   }
 }
 
+var styles = {
+  legible: {
+    label: 'Legible',
+    options: {
+      centerTitle: false,
+      indentMargins: true,
+      styles: {
+        alignment: 'left',
+        heading: { italic: true },
+        reference: { italic: true },
+        referenceHeading: { italic: true }
+      }
+    }
+  },
+  stodgy: {
+    label: 'Stodgy',
+    options: {}
+  }
+}
+
 var CodeMirror = require('codemirror')
 require('codemirror/mode/markdown/markdown')
 require('codemirror/addon/lint/lint')
@@ -88,18 +108,9 @@ function addPanel () {
   var wordButton = document.createElement('button')
   wordButton.appendChild(document.createTextNode('Download for Word'))
   wordButton.addEventListener('click', function () {
-    var options = {
-      centerTitle: false,
-      indentMargins: true,
-      markFilled: true,
-      numbering: numberings[numberingSelect.value].numbering,
-      styles: {
-        alignment: 'left',
-        heading: { italic: true },
-        reference: { italic: true },
-        referenceHeading: { italic: true }
-      }
-    }
+    var options = Object.assign({
+      numbering: numberings[numberingSelect.value].numbering
+    }, styles[styleSelect.value].options)
     try {
       var parsed = commonmark.parse(window.editor.getValue())
     } catch (error) {
@@ -114,6 +125,15 @@ function addPanel () {
       })
   })
   panel.appendChild(wordButton)
+
+  var styleSelect = document.createElement('select')
+  Object.keys(styles).forEach(function (key) {
+    var option = document.createElement('option')
+    option.value = key
+    option.appendChild(document.createTextNode(styles[key].label))
+    styleSelect.appendChild(option)
+  })
+  panel.appendChild(styleSelect)
 
   var numberingSelect = document.createElement('select')
   Object.keys(numberings).forEach(function (key) {
