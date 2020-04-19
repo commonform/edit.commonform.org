@@ -76,7 +76,7 @@ function addEditor () {
       mode: 'markdown',
       gutters: ['CodeMirror-lint-markers'],
       lint: true,
-      value: '# Welcome'
+      value: '# Welcome\n\nYou can use this page to type, format, and check forms.'
     }
   )
 }
