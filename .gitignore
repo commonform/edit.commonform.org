@@ -1,3 +1,5 @@
 node_modules
 *.log
 site/bundle.js
+site/codemirror.css
+site/lint.css

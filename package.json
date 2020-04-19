@@ -2,6 +2,9 @@
   "private": true,
   "dependencies": {
     "codemirror": "^5.52.2",
+    "commonform-commonmark": "^5.3.0",
+    "commonform-critique": "^1.0.3",
+    "commonform-lint": "^3.0.2",
     "husky": "^4.2.5",
     "lint-staged": "^10.1.6"
   },
@@ -10,7 +13,9 @@
     "standard": "^14.3.3"
   },
   "scripts": {
+    "prebuild": "cp node_modules/codemirror/lib/codemirror.css site/ && cp node_modules/codemirror/addon/lint/lint.css site/",
     "build": "browserify -o site/bundle.js script.js",
+    "format": "standard --fix",
     "lint": "standard"
   },
   "husky": {
