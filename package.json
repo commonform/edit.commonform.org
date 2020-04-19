@@ -1,0 +1,24 @@
+{
+  "private": true,
+  "dependencies": {
+    "codemirror": "^5.52.2",
+    "husky": "^4.2.5",
+    "lint-staged": "^10.1.6"
+  },
+  "devDependencies": {
+    "browserify": "^16.5.1",
+    "standard": "^14.3.3"
+  },
+  "scripts": {
+    "build": "browserify -o site/bundle.js script.js",
+    "lint": "standard"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.js": "standard"
+  }
+}

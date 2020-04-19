@@ -1,0 +1,44 @@
+html, body {
+  background: #eee;
+  height: 100vh;
+  margin: 0;
+  overflow: hidden;
+  padding: 0;
+}
+
+main {
+  height: 100vh;
+  margin: 0 auto;
+  max-width: 53rem;
+  padding: 0;
+}
+
+.CodeMirror {
+  background: white;
+  filter: drop-shadow(0 0 0.5rem #777);
+  font-family: serif;
+  font-size: 150%;
+  height: 90vh;
+  margin: 2vh 0 0 0;
+}
+
+a[href] {
+  text-decoration: none;
+}
+
+a[href]:hover {
+  text-decoration: underline;
+}
+
+.links a[href] {
+  margin: 0 1ex;
+  font-size: 100%;
+}
+
+.links a[href]:first-child {
+  margin-left: 0;
+}
+
+.links a[href]:last-child {
+  margin-right: 0;
+}
