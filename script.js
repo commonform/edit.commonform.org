@@ -105,6 +105,24 @@ function addPanel () {
   var panel = document.createElement('div')
   panel.id = 'panel'
 
+  var styleSelect = document.createElement('select')
+  Object.keys(styles).forEach(function (key) {
+    var option = document.createElement('option')
+    option.value = key
+    option.appendChild(document.createTextNode(styles[key].label))
+    styleSelect.appendChild(option)
+  })
+  panel.appendChild(styleSelect)
+
+  var numberingSelect = document.createElement('select')
+  Object.keys(numberings).forEach(function (key) {
+    var option = document.createElement('option')
+    option.value = key
+    option.appendChild(document.createTextNode(numberings[key].label))
+    numberingSelect.appendChild(option)
+  })
+  panel.appendChild(numberingSelect)
+
   var wordButton = document.createElement('button')
   wordButton.appendChild(document.createTextNode('Download for Word'))
   wordButton.addEventListener('click', function () {
@@ -125,24 +143,6 @@ function addPanel () {
       })
   })
   panel.appendChild(wordButton)
-
-  var styleSelect = document.createElement('select')
-  Object.keys(styles).forEach(function (key) {
-    var option = document.createElement('option')
-    option.value = key
-    option.appendChild(document.createTextNode(styles[key].label))
-    styleSelect.appendChild(option)
-  })
-  panel.appendChild(styleSelect)
-
-  var numberingSelect = document.createElement('select')
-  Object.keys(numberings).forEach(function (key) {
-    var option = document.createElement('option')
-    option.value = key
-    option.appendChild(document.createTextNode(numberings[key].label))
-    numberingSelect.appendChild(option)
-  })
-  panel.appendChild(numberingSelect)
 
   window.editor.addPanel(panel, { position: 'after-top', stable: true })
 }
