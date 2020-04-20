@@ -47,46 +47,14 @@ var styles = {
 
 var CodeMirror = require('codemirror')
 require('codemirror/mode/markdown/markdown')
-require('codemirror/addon/lint/lint')
 require('codemirror/addon/display/panel')
 
 document.addEventListener('DOMContentLoaded', function () {
-  configureLinters()
   addEditor()
-  addPanel()
+  addDownloadPanel()
+  addLintPanel()
   addHelpLinks()
 })
-
-function configureLinters () {
-  CodeMirror.registerHelper('lint', 'markdown', function (text, options) {
-    var from = CodeMirror.Pos(0 /* line */, 0 /* column */)
-    var to = CodeMirror.Pos(0, 0)
-    try {
-      var parsed = commonmark.parse(text)
-    } catch (error) {
-      return [
-        {
-          from: from,
-          to: to,
-          message: 'Invalid Syntax',
-          severity: 'error'
-        }
-      ]
-    }
-    var messages = []
-      .concat(lint(parsed.form))
-      .concat(critique(parsed.form))
-      .map(function (annotation) {
-        return {
-          from: from,
-          to: to,
-          message: annotation.message,
-          severity: annotation.level
-        }
-      })
-    return messages
-  })
-}
 
 function addEditor () {
   window.editor = CodeMirror(
@@ -103,9 +71,9 @@ function addEditor () {
   )
 }
 
-function addPanel () {
+function addDownloadPanel () {
   var panel = document.createElement('div')
-  panel.id = 'panel'
+  panel.className = 'panel downloads'
 
   var styleSelect = makeSelect(styles)
   panel.appendChild(styleSelect)
@@ -173,6 +141,58 @@ function addPanel () {
   panel.appendChild(htmlButton)
 
   window.editor.addPanel(panel, { position: 'after-top', stable: true })
+}
+
+function addLintPanel () {
+  var panel = document.createElement('div')
+  panel.className = 'panel annotations'
+
+  var editor = window.editor
+  editor.on('changes', function () {
+    var text = editor.getValue()
+    try {
+      var parsed = commonmark.parse(text)
+    } catch (error) {
+      return renderAnnotations([
+        {
+          message: 'Invalid Syntax',
+          severity: 'error'
+        }
+      ])
+    }
+    var annotations = []
+      .concat(lint(parsed.form))
+      .concat(critique(parsed.form))
+    renderAnnotations(annotations)
+  })
+
+  function renderAnnotations (annotations) {
+    panel.innerHTML = ''
+    var messagesSeen = []
+    var unique = []
+    annotations.forEach(function (annotation) {
+      var message = annotation.message
+      if (messagesSeen.indexOf(message) === -1) {
+        messagesSeen.push(message)
+        unique.push(annotation)
+      }
+    })
+    if (unique.length === 0) return
+    var ul = document.createElement('ul')
+    unique.forEach(function (annotation) {
+      var li = document.createElement('li')
+      li.className = annotation.level
+      li.appendChild(document.createTextNode(annotation.message))
+      ul.appendChild(li)
+      panelObject.changed()
+    })
+    panel.appendChild(ul)
+  }
+
+  var panelObject = window.editor.addPanel(panel, {
+    position: 'after-top',
+    stable: true
+  })
 }
 
 function makeSelect (choices) {

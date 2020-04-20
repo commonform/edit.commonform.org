@@ -27,16 +27,39 @@ main {
   margin: 0;
 }
 
-#panel {
+.panel {
   background: #f7f7f7;
   font-family: sans-serif;
-  font-size: 80%;
+  font-size: 60%;
+  padding-left: 1rem;
+}
+
+.downloads {
   margin: 2vh 0 0 0;
 }
 
-#panel button,
-#panel select {
+.downloads button,
+.downloads select {
   margin: 1ex;
+}
+
+.annotations {
+  height: 3rem;
+  overflow-y: scroll;
+}
+
+.annotations ul {
+  margin: 0;
+  padding: 0;
+}
+
+.annotations ul li {
+  list-style: none;
+  margin: 0.5ex 0;
+}
+
+.error {
+  color: darkred;
 }
 
 a[href] {
