@@ -82,7 +82,7 @@ function addDownloadPanel () {
   panel.appendChild(numberingSelect)
 
   var wordButton = document.createElement('button')
-  wordButton.appendChild(document.createTextNode('Download for Word'))
+  wordButton.appendChild(document.createTextNode('Download Word'))
   wordButton.addEventListener('click', function () {
     var options = Object.assign({
       numbering: numberings[numberingSelect.value].numbering
@@ -139,6 +139,22 @@ function addDownloadPanel () {
     FileSaver.saveAs(blob, 'commonform-' + date + '.html', true)
   })
   panel.appendChild(htmlButton)
+
+  var jsonButton = document.createElement('button')
+  jsonButton.appendChild(document.createTextNode('JSON'))
+  jsonButton.addEventListener('click', function () {
+    try {
+      var parsed = commonmark.parse(window.editor.getValue())
+    } catch (error) {
+      console.error(error)
+      return
+    }
+    var json = JSON.stringify(parsed.form)
+    var blob = new Blob([json], { type: 'application/json' })
+    var date = new Date().toISOString()
+    FileSaver.saveAs(blob, 'commonform-' + date + '.json', true)
+  })
+  panel.appendChild(jsonButton)
 
   window.editor.addPanel(panel, { position: 'after-top', stable: true })
 }
