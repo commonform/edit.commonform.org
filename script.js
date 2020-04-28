@@ -102,23 +102,23 @@ function addDownloadPanel () {
   })
   panel.appendChild(wordButton)
 
-  var html5Label = makeCheckboxLabel('HTML5')
-  panel.appendChild(html5Label)
-
   var html5Check = makeCheckbox()
   panel.appendChild(html5Check)
 
-  var idsLabel = makeCheckboxLabel('IDs')
-  panel.appendChild(idsLabel)
+  var html5Label = makeCheckboxLabel('HTML5')
+  panel.appendChild(html5Label)
 
   var idsCheck = makeCheckbox()
   panel.appendChild(idsCheck)
 
-  var listsLabel = makeCheckboxLabel('Lists')
-  panel.appendChild(listsLabel)
+  var idsLabel = makeCheckboxLabel('IDs')
+  panel.appendChild(idsLabel)
 
   var listsCheck = makeCheckbox()
   panel.appendChild(listsCheck)
+
+  var listsLabel = makeCheckboxLabel('Lists')
+  panel.appendChild(listsLabel)
 
   var htmlButton = document.createElement('button')
   htmlButton.appendChild(document.createTextNode('Download HTML'))
