@@ -9,7 +9,7 @@
     "commonform-html": "^3.6.1",
     "commonform-lint": "^3.0.2",
     "decimal-numbering": "^3.0.2",
-    "file-saver": "^2.0.2",
+    "file-saver": "^2.0.5",
     "husky": "^4.2.5",
     "lint-staged": "^10.2.11",
     "outline-numbering": "^2.0.0",
