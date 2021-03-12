@@ -16,7 +16,7 @@
     "resolutions-schedules-exhibits-numbering": "^1.0.0"
   },
   "devDependencies": {
-    "browserify": "^16.5.1",
+    "browserify": "^17.0.0",
     "standard": "^16.0.3"
   },
   "scripts": {
