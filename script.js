@@ -1,12 +1,12 @@
 /* eslint-env browser */
-var FileSaver = require('file-saver')
-var commonmark = require('commonform-commonmark')
-var critique = require('commonform-critique')
-var docx = require('commonform-docx')
-var html = require('commonform-html')
-var lint = require('commonform-lint')
+const FileSaver = require('file-saver')
+const commonmark = require('commonform-commonmark')
+const critique = require('commonform-critique')
+const docx = require('commonform-docx')
+const html = require('commonform-html')
+const lint = require('commonform-lint')
 
-var numberings = {
+const numberings = {
   outline: {
     label: 'Outline',
     numbering: require('outline-numbering')
@@ -25,7 +25,7 @@ var numberings = {
   }
 }
 
-var styles = {
+const styles = {
   legible: {
     label: 'Legible',
     options: {
@@ -45,7 +45,7 @@ var styles = {
   }
 }
 
-var CodeMirror = require('codemirror')
+const CodeMirror = require('codemirror')
 require('codemirror/mode/markdown/markdown')
 require('codemirror/addon/display/panel')
 
@@ -72,19 +72,19 @@ function addEditor () {
 }
 
 function addDownloadPanel () {
-  var panel = document.createElement('div')
+  const panel = document.createElement('div')
   panel.className = 'panel downloads'
 
-  var styleSelect = makeSelect(styles)
+  const styleSelect = makeSelect(styles)
   panel.appendChild(styleSelect)
 
-  var numberingSelect = makeSelect(numberings)
+  const numberingSelect = makeSelect(numberings)
   panel.appendChild(numberingSelect)
 
-  var wordButton = document.createElement('button')
+  const wordButton = document.createElement('button')
   wordButton.appendChild(document.createTextNode('Download Word'))
   wordButton.addEventListener('click', function () {
-    var options = Object.assign({
+    const options = Object.assign({
       numbering: numberings[numberingSelect.value].numbering
     }, styles[styleSelect.value].options)
     try {
@@ -96,31 +96,31 @@ function addDownloadPanel () {
     docx(parsed.form, [], options)
       .generateAsync({ type: 'blob' })
       .then(function (blob) {
-        var date = new Date().toISOString()
+        const date = new Date().toISOString()
         FileSaver.saveAs(blob, 'commonform-' + date + '.docx', true)
       })
   })
   panel.appendChild(wordButton)
 
-  var html5Check = makeCheckbox()
+  const html5Check = makeCheckbox()
   panel.appendChild(html5Check)
 
-  var html5Label = makeCheckboxLabel('HTML5')
+  const html5Label = makeCheckboxLabel('HTML5')
   panel.appendChild(html5Label)
 
-  var idsCheck = makeCheckbox()
+  const idsCheck = makeCheckbox()
   panel.appendChild(idsCheck)
 
-  var idsLabel = makeCheckboxLabel('IDs')
+  const idsLabel = makeCheckboxLabel('IDs')
   panel.appendChild(idsLabel)
 
-  var listsCheck = makeCheckbox()
+  const listsCheck = makeCheckbox()
   panel.appendChild(listsCheck)
 
-  var listsLabel = makeCheckboxLabel('Lists')
+  const listsLabel = makeCheckboxLabel('Lists')
   panel.appendChild(listsLabel)
 
-  var htmlButton = document.createElement('button')
+  const htmlButton = document.createElement('button')
   htmlButton.appendChild(document.createTextNode('Download HTML'))
   htmlButton.addEventListener('click', function () {
     try {
@@ -129,18 +129,18 @@ function addDownloadPanel () {
       console.error(error)
       return
     }
-    var content = html(parsed.form, [], {
+    const content = html(parsed.form, [], {
       html5: html5Check.checked,
       ids: idsCheck.checked,
       lists: listsCheck.checked
     })
-    var blob = new Blob([content], { type: 'text/html' })
-    var date = new Date().toISOString()
+    const blob = new Blob([content], { type: 'text/html' })
+    const date = new Date().toISOString()
     FileSaver.saveAs(blob, 'commonform-' + date + '.html', true)
   })
   panel.appendChild(htmlButton)
 
-  var jsonButton = document.createElement('button')
+  const jsonButton = document.createElement('button')
   jsonButton.appendChild(document.createTextNode('JSON'))
   jsonButton.addEventListener('click', function () {
     try {
@@ -149,9 +149,9 @@ function addDownloadPanel () {
       console.error(error)
       return
     }
-    var json = JSON.stringify(parsed.form)
-    var blob = new Blob([json], { type: 'application/json' })
-    var date = new Date().toISOString()
+    const json = JSON.stringify(parsed.form)
+    const blob = new Blob([json], { type: 'application/json' })
+    const date = new Date().toISOString()
     FileSaver.saveAs(blob, 'commonform-' + date + '.json', true)
   })
   panel.appendChild(jsonButton)
@@ -160,12 +160,12 @@ function addDownloadPanel () {
 }
 
 function addLintPanel () {
-  var panel = document.createElement('div')
+  const panel = document.createElement('div')
   panel.className = 'panel annotations'
 
-  var editor = window.editor
+  const editor = window.editor
   editor.on('changes', function () {
-    var text = editor.getValue()
+    const text = editor.getValue()
     try {
       var parsed = commonmark.parse(text)
     } catch (error) {
@@ -176,7 +176,7 @@ function addLintPanel () {
         }
       ])
     }
-    var annotations = []
+    const annotations = []
       .concat(lint(parsed.form))
       .concat(critique(parsed.form))
     renderAnnotations(annotations)
@@ -184,19 +184,19 @@ function addLintPanel () {
 
   function renderAnnotations (annotations) {
     panel.innerHTML = ''
-    var messagesSeen = []
-    var unique = []
+    const messagesSeen = []
+    const unique = []
     annotations.forEach(function (annotation) {
-      var message = annotation.message
+      const message = annotation.message
       if (messagesSeen.indexOf(message) === -1) {
         messagesSeen.push(message)
         unique.push(annotation)
       }
     })
     if (unique.length === 0) return
-    var ul = document.createElement('ul')
+    const ul = document.createElement('ul')
     unique.forEach(function (annotation) {
-      var li = document.createElement('li')
+      const li = document.createElement('li')
       li.className = annotation.level
       li.appendChild(document.createTextNode(annotation.message))
       ul.appendChild(li)
@@ -212,9 +212,9 @@ function addLintPanel () {
 }
 
 function makeSelect (choices) {
-  var select = document.createElement('select')
+  const select = document.createElement('select')
   Object.keys(choices).forEach(function (key) {
-    var option = document.createElement('option')
+    const option = document.createElement('option')
     option.value = key
     option.appendChild(document.createTextNode(choices[key].label))
     select.appendChild(option)
@@ -223,35 +223,35 @@ function makeSelect (choices) {
 }
 
 function makeCheckboxLabel (text) {
-  var label = document.createElement('label')
+  const label = document.createElement('label')
   label.appendChild(document.createTextNode(text))
   return label
 }
 
 function makeCheckbox () {
-  var checkbox = document.createElement('input')
+  const checkbox = document.createElement('input')
   checkbox.type = 'checkbox'
   checkbox.checked = 'yes'
   return checkbox
 }
 
 function addHelpLinks () {
-  var p = document.createElement('p')
+  const p = document.createElement('p')
   p.className = 'links'
 
-  var typeLink = document.createElement('a')
+  const typeLink = document.createElement('a')
   typeLink.href = 'https://type.commonform.org'
   typeLink.target = '_blank'
   typeLink.appendChild(document.createTextNode('Typing Guide'))
   p.appendChild(typeLink)
 
-  var githubLink = document.createElement('a')
+  const githubLink = document.createElement('a')
   githubLink.href = 'https://github.com/commonform/edit.commonform.org'
   githubLink.target = '_blank'
   githubLink.appendChild(document.createTextNode('GitHub'))
   p.appendChild(githubLink)
 
-  var emailLink = document.createElement('a')
+  const emailLink = document.createElement('a')
   emailLink.href = 'mailto:kyle@commonform.org'
   emailLink.appendChild(document.createTextNode('E-Mail Kyle'))
   p.appendChild(emailLink)
