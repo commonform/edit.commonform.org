@@ -87,8 +87,9 @@ function addDownloadPanel () {
     const options = Object.assign({
       numbering: numberings[numberingSelect.value].numbering
     }, styles[styleSelect.value].options)
+    let parsed
     try {
-      var parsed = commonmark.parse(window.editor.getValue())
+      parsed = commonmark.parse(window.editor.getValue())
     } catch (error) {
       console.error(error)
       return
@@ -123,8 +124,9 @@ function addDownloadPanel () {
   const htmlButton = document.createElement('button')
   htmlButton.appendChild(document.createTextNode('Download HTML'))
   htmlButton.addEventListener('click', function () {
+    let parsed
     try {
-      var parsed = commonmark.parse(window.editor.getValue())
+      parsed = commonmark.parse(window.editor.getValue())
     } catch (error) {
       console.error(error)
       return
@@ -143,8 +145,9 @@ function addDownloadPanel () {
   const jsonButton = document.createElement('button')
   jsonButton.appendChild(document.createTextNode('JSON'))
   jsonButton.addEventListener('click', function () {
+    let parsed
     try {
-      var parsed = commonmark.parse(window.editor.getValue())
+      parsed = commonmark.parse(window.editor.getValue())
     } catch (error) {
       console.error(error)
       return
@@ -166,8 +169,9 @@ function addLintPanel () {
   const editor = window.editor
   editor.on('changes', function () {
     const text = editor.getValue()
+    let parsed
     try {
-      var parsed = commonmark.parse(text)
+      parsed = commonmark.parse(text)
     } catch (error) {
       return renderAnnotations([
         {
@@ -205,7 +209,7 @@ function addLintPanel () {
     panel.appendChild(ul)
   }
 
-  var panelObject = window.editor.addPanel(panel, {
+  const panelObject = window.editor.addPanel(panel, {
     position: 'after-top',
     stable: true
   })
