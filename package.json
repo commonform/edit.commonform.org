@@ -11,7 +11,7 @@
     "decimal-numbering": "^3.0.2",
     "file-saver": "^2.0.5",
     "husky": "^8.0.1",
-    "lint-staged": "^10.5.4",
+    "lint-staged": "^13.0.2",
     "outline-numbering": "^2.0.0",
     "resolutions-schedules-exhibits-numbering": "^1.0.0"
   },
