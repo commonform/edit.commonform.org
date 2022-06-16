@@ -17,7 +17,7 @@
   },
   "devDependencies": {
     "browserify": "^17.0.0",
-    "standard": "^16.0.3"
+    "standard": "^17.0.0"
   },
   "scripts": {
     "prebuild": "cp node_modules/codemirror/lib/codemirror.css site/ && cp node_modules/codemirror/addon/lint/lint.css site/",
