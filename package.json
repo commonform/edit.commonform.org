@@ -3,7 +3,7 @@
   "dependencies": {
     "agreement-schedules-exhibits-numbering": "^2.0.0",
     "codemirror": "^5.59.4",
-    "commonform-commonmark": "^6.0.0",
+    "commonform-commonmark": "^8.0.0",
     "commonform-critique": "^1.0.3",
     "commonform-docx": "^5.4.0",
     "commonform-html": "^3.6.1",
