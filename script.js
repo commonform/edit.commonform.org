@@ -6,22 +6,22 @@ const docx = require('commonform-docx')
 const html = require('commonform-html')
 const lint = require('commonform-lint')
 
-const numberings = {
+const numberStyles = {
   outline: {
     label: 'Outline',
-    numbering: require('outline-numbering')
+    numberStyle: require('outline-numbering')
   },
   decimal: {
     label: 'Decimal',
-    numbering: require('decimal-numbering')
+    numberStyle: require('decimal-numbering')
   },
   ase: {
     label: 'Agreement, Schedules, Exhibits',
-    numbering: require('agreement-schedules-exhibits-numbering')
+    numberStyle: require('agreement-schedules-exhibits-numbering')
   },
   rse: {
     label: 'Resolutions, Schedules, Exhibits',
-    numbering: require('resolutions-schedules-exhibits-numbering')
+    numberStyle: require('resolutions-schedules-exhibits-numbering')
   }
 }
 
@@ -78,14 +78,14 @@ function addDownloadPanel () {
   const styleSelect = makeSelect(styles)
   panel.appendChild(styleSelect)
 
-  const numberingSelect = makeSelect(numberings)
-  panel.appendChild(numberingSelect)
+  const numberStyleSelect = makeSelect(numberStyles)
+  panel.appendChild(numberStyleSelect)
 
   const wordButton = document.createElement('button')
   wordButton.appendChild(document.createTextNode('Download Word'))
   wordButton.addEventListener('click', function () {
     const options = Object.assign({
-      numbering: numberings[numberingSelect.value].numbering
+      numberStyle: numberStyles[numberStyleSelect.value].numberStyle
     }, styles[styleSelect.value].options)
     let parsed
     try {
